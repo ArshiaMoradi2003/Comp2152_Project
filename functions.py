@@ -133,7 +133,61 @@ def inception_dream(num_dream_lvls):
         # 1 + 1 + 1 + 1 + inception_dream(1)
         # 1 + 1 + 1 + 1 + 2
         return 1 + int(inception_dream(num_dream_lvls - 1))
-
+    
+def hero_events_occur(events_Pass,health_points,combat_strength):
+    chance = random.randrange(0,51)
+    chance_two = random.randrange(0,2)
+    for event in events_Pass:
+        if event == "Advice":
+            print("You remember an old man giving you some advice: \"Cripple the spleen and you will never go hungry\"")
+            print("It'll probably help somehow, Combat strength + 1\n")
+            combat_strength += 1
+        elif event == "Fish":
+            print("You remember trying to do some fishing")
+            if chance == 0:
+                print("Nothing's biting\n")
+            elif chance <= 15:
+                print(".....Sardines\n")
+                health_points += 1
+                print("You gained 1 health points for a total of " + str(health_points)+"\n")
+            elif chance > 15 and chance < 50:
+                print("Tilapia nice\n")
+                health_points += 2
+                print("You gained 2 health points for a total of " + str(health_points)+"\n")
+            else:
+                print("You caught a Salmon! You eat well.")
+                health_points += 3
+                print("You gained 3 health points for a total of " + str(health_points)+"\n")
+        elif event == "Pocket":
+            print("You rummage through your pockets and find a pen.....this is irrelevent for your situation\n")
+        elif event == "Training":
+            print("You do some exercise while you are waiting for a monster to show up, you feel a little stronger\n")
+            combat_strength += 1
+        elif event == "Food":
+            food = random.randrange(1,7)
+            print("You recall a kind stranger handing you a sandwich")
+            print(f"It was pretty good you get {food} health points\n")
+            health_points += food
+        elif event == "Forget":
+            print("You realized you forgot to bring a helmet before going into battle")
+            print("Your overall health is lower\n")
+            health_points -= 2
+        elif event == "Frog":
+            print("You have faint memories of tripping face first into a poison dart frog\n")
+            if chance_two == 1:
+                print("You lose some health but gain some strength\n")
+                health_points -= 3
+                combat_strength +=2
+            else:
+                print("You lose some strength but gain some health\n")
+                health_points += 2
+                combat_strength -= 3
+        elif event == "Egg":
+            print("You eat an egg.....rotten -1 everywhere")
+            health_points -=1
+            combat_strength -=1
+    
+    return health_points,combat_strength
 
 # Lab 06 - Question 3 and 4
 def save_game(winner, hero_name="", num_stars=0):
