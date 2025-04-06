@@ -173,4 +173,12 @@ def adjust_combat_strength(combat_strength, m_combat_strength):
         else:
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
 
+# Define the Loot
+loot_options = ["Health Potion", "Poison Potion", "Secret Note", "Leather Boots", "Flimsy Gloves"]
 
+def monster_drops(belt):
+    # Monster drops a random loot item
+    drop = random.choice(loot_options)
+    belt.append(drop)
+    print(f"    |    The monster drops: {drop}")
+    return belt
