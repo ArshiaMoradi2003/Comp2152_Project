@@ -1,8 +1,7 @@
-# Import the random library to use for the dice later
 import random
 from random import choice
 
-# Magic Shop
+
 def magic_shop(belt, gold, combat_strength):
     # Define available items
     items = {
@@ -14,26 +13,33 @@ def magic_shop(belt, gold, combat_strength):
     print("\n🌟 Welcome to Magic Shop! 🌟")
     print(f"You have {gold} gold coins\n")
 
+    # Display available items
     print("🛒 Items available:")
     for idx, (item_name, item_data) in enumerate(items.items(), start=1):
-        print(f" {idx}. {item_name}: +{item_data['combat_strength']} Combat Strength, +{item_data['health_points']} Health Points (Cost: {item_data['cost']} gold)")
+        print(
+            f" {idx}. {item_name}: +{item_data['combat_strength']} Combat Strength, +{item_data['health_points']} Health Points (Cost: {item_data['cost']} gold)")
 
+    # Shop interaction loop
     while True:
         print("\nEnter the item you want to buy (or 'exit' to leave):")
-        choice_input = input().strip().lower()
+        choice = input().strip().lower()
 
-        if choice_input == 'exit':
+        if choice == 'exit':
             print("You leave the Magic Shop.")
             break
 
-        if choice_input.isdigit() and 1 <= int(choice_input) <= len(items):
-            item_choice = int(choice_input) - 1
+        if choice.isdigit() and 1 <= int(choice) <= len(items):
+            item_choice = int(choice) - 1
             item_name = list(items.keys())[item_choice]
             item_data = items[item_name]
 
+            # Check if the player has enough gold
             if gold >= item_data["cost"]:
+                # Deduct gold and add item to the belt
                 gold -= item_data["cost"]
                 belt.append(item_name)
+
+                # Update combat strength or health points
                 combat_strength += item_data["combat_strength"]
                 print(f"\nYou bought a {item_name}!")
                 print(f"Remaining gold: {gold}")
@@ -47,13 +53,12 @@ def magic_shop(belt, gold, combat_strength):
     return belt, gold, combat_strength
 
 
-# Use Loot
 def use_loot(belt, health_points):
+    """Use the first item from the belt."""
     good_loot_options = ["Health Potion", "Leather Boots"]
     bad_loot_options = ["Poison Potion"]
 
     print("    |    !!You see a monster in the distance! So you quickly use your first item:")
-
     if belt:
         first_item = belt.pop(0)
     else:
@@ -76,11 +81,10 @@ def use_loot(belt, health_points):
     return belt, health_points
 
 
-# Collect Loot
 def collect_loot(loot_options, belt):
     ascii_image3 = """
                       @@@ @@                
-             *# ,        @              
+             *# ,        @               
            @           @                
                 @@@@@@@@                
                @   @ @% @*              
@@ -101,7 +105,7 @@ def collect_loot(loot_options, belt):
     return loot_options, belt
 
 
-# Hero's Attack
+# Hero's Attack Function
 def hero_attacks(combat_strength, m_health_points):
     ascii_image = """
                                 @@   @@ 
@@ -114,13 +118,14 @@ def hero_attacks(combat_strength, m_health_points):
                @@@@@        @@       
                @    @@@@                
           @@@ @@                        
-       @@     @                         
+       @@     @                          
    @@*       @                          
    @        @@                          
            @@                                                    
          @   @@@@@@@                    
         @            @                  
       @              @                  
+
   """
     print(ascii_image)
     print("    |    Player's weapon (" + str(combat_strength) + ") ---> Monster (" + str(m_health_points) + ")")
@@ -133,7 +138,7 @@ def hero_attacks(combat_strength, m_health_points):
     return m_health_points
 
 
-# Monster's Attack
+# Monster's Attack Function
 def monster_attacks(m_combat_strength, health_points):
     ascii_image2 = """                                                                 
            @@@@ @                            
@@ -161,7 +166,6 @@ def monster_attacks(m_combat_strength, health_points):
         print("    |    The monster has reduced Player's health to: " + str(health_points))
     return health_points
 
-
 # Recursion
 def inception_dream(num_dream_lvls):
     num_dream_lvls = int(num_dream_lvls)
@@ -175,7 +179,7 @@ def inception_dream(num_dream_lvls):
         return 1 + int(inception_dream(num_dream_lvls - 1))
 
 
-# Save Game
+# Lab 06 - Question 3 and 4
 def save_game(winner, hero_name="", num_stars=0):
     with open("save.txt", "a") as file:
         if winner == "Hero":
@@ -183,8 +187,7 @@ def save_game(winner, hero_name="", num_stars=0):
         elif winner == "Monster":
             file.write("Monster has killed the hero previously\n")
 
-
-# Load Game
+# Lab 06 - Question 5a
 def load_game():
     try:
         with open("save.txt", "r") as file:
@@ -199,7 +202,7 @@ def load_game():
         return None
 
 
-# Adjust Combat Strength
+# Lab 06 - Question 5b
 def adjust_combat_strength(combat_strength, m_combat_strength):
     last_game = load_game()
     if last_game:
@@ -213,14 +216,3 @@ def adjust_combat_strength(combat_strength, m_combat_strength):
             print("    |    ... Increasing the hero's combat strength since you lost last time")
         else:
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
-    return combat_strength, m_combat_strength
-
-
-# Monster Drops
-loot_options = ["Health Potion", "Poison Potion", "Secret Note", "Leather Boots", "Flimsy Gloves"]
-
-def monster_drops(belt):
-    drop = random.choice(loot_options)
-    belt.append(drop)
-    print(f"    |    The monster drops: {drop}")
-    return belt
