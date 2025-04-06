@@ -198,14 +198,8 @@ if not input_invalid:
                 print("health points: " + str(health_points))
         print("num_dream_lvls: ", num_dream_lvls)
  
-    print(combat_strength)
-    print(health_points)
-
     events_Pass = {key for key,value in hero_events.items() if combat_strength >= value}
     health_points,combat_strength = functions.hero_events_occur(events_Pass,health_points,combat_strength)
-
-    print(combat_strength)
-    print(health_points)
 
     # Fight Sequence
     # Loop while the monster and the player are alive. Call fight sequence functions
