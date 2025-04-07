@@ -33,6 +33,9 @@ big_dice_options = list(range(1, 21))
 # Define Weapons
 weapons = ["Fist", "Knife", "Club", "Gun", "Bomb", "Nuclear Bomb"]
 
+# Defining events
+hero_events = {"Advice":1,"Fish":5,"Pocket":2,"Training":3,"Food":6,"Forget":7,"Frog":8,"Egg":9}
+
 # Define Loot
 loot_options = ["Health Potion", "Poison Potion", "Secret Note", "Leather Boots", "Flimsy Gloves"]
 belt = []
@@ -131,6 +134,9 @@ if not input_invalid:
             print("    |    After the dream, your stats:")
             print(f"    |    Combat strength: {combat_strength}")
             print(f"    |    Health points: {health_points}")
+
+    events_Pass = {key for key,value in hero_events.items() if combat_strength >= value}
+    health_points,combat_strength = functions.hero_events_occur(events_Pass,health_points,combat_strength)
 
     # Fight Sequence
     print("    ------------------------------------------------------------------")
