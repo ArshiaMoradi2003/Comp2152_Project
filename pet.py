@@ -14,7 +14,7 @@ class Pet:
         print(f"    |    {self.name} uses its {self.ability} ability!")
 
         if self.ability == "heal":
-            health_points = min(20, health_points + 5)
+            health_points = min(20,health_points +  5)
             print(f"    |    {self.name} heals you. Health is now {health_points}")
         elif self.ability == "boost":
             combat_strength += 1

@@ -3,26 +3,7 @@ import random
 
 # Put all the functions into another file and import them
 import functions
-from pet import Pet
 
-pets = [
-    Pet("Fluffy", "heal"),
-    Pet("Blaze", "boost"),
-    Pet("Shadow", "weaken")
-]
-
-# Choose pet
-print("    ------------------------------------------------------------------")
-print("    |    Choose a pet to assist you in battle:")
-for idx, p in enumerate(pets):
-    print(f"    |    {idx + 1}. {p.name} ({p.ability})")
-
-selected = -1
-while selected not in range(1, len(pets) + 1):
-    selected = int(input("    |    Enter pet number: "))
-
-selected_pet = pets[selected - 1]
-print(f"    |    You chose {selected_pet.name} with ability: {selected_pet.ability}")
 # Define two Dice
 small_dice_options = list(range(1, 7))
 big_dice_options = list(range(1, 21))
@@ -102,7 +83,7 @@ if not input_invalid:
     print("    |    The hero\'s weapon is " + str(weapons[weapon_roll - 1]))
 
     # Lab 06 - Question 5b
-    functions.adjust_combat_strength(combat_strength, m_combat_strength)
+    functions_lab06_solution.adjust_combat_strength(combat_strength, m_combat_strength)
 
     # Weapon Roll Analysis
     print("    ------------------------------------------------------------------")
@@ -139,20 +120,20 @@ if not input_invalid:
     input("Roll for first item (enter)")
 
     # Collect Loot First time
-    loot_options, belt = functions.collect_loot(loot_options, belt)
+    loot_options, belt = functions_lab06_solution.collect_loot(loot_options, belt)
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
     input("Roll for second item (Press enter)")
 
     # Collect Loot Second time
-    loot_options, belt = functions.collect_loot(loot_options, belt)
+    loot_options, belt = functions_lab06_solution.collect_loot(loot_options, belt)
 
     print("    |    You're super neat, so you organize your belt alphabetically:")
     belt.sort()
     print("    |    Your belt: ", belt)
 
     # Use Loot
-    belt, health_points = functions.use_loot(belt, health_points)
+    belt, health_points = functions_lab06_solution.use_loot(belt, health_points)
 
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
@@ -208,7 +189,7 @@ if not input_invalid:
                 print("Number entered must be a whole number between 0-3 inclusive, try again")
             elif (not num_dream_lvls == 0):
                 health_points -= 1
-                crazy_level = functions.inception_dream(num_dream_lvls)
+                crazy_level = functions_lab06_solution.inception_dream(num_dream_lvls)
                 combat_strength += crazy_level
                 print("combat strength: " + str(combat_strength))
                 print("health points: " + str(health_points))
@@ -222,32 +203,20 @@ if not input_invalid:
         # Fight Sequence
         print("    |", end="    ")
 
-        # Pet ability usage
-        use = input(f"    |    Do you want to use {selected_pet.name}'s ability this turn? (y/n): ").lower()
-        if use == 'y':
-            combat_strength, m_combat_strength, health_points = selected_pet.use_ability(combat_strength,
-                                                                                         m_combat_strength,
-                                                                                         health_points)
-        else:
-            print(f"    |    You saved {selected_pet.name}'s ability for later.")
-
-        # 매 턴 끝나고 쿨타임 감소
-        selected_pet.tick()
-
         # Lab 5: Question 5:
         input("Roll to see who strikes first (Press Enter)")
         attack_roll = random.choice(small_dice_options)
         if not (attack_roll % 2 == 0):
             print("    |", end="    ")
             input("You strike (Press enter)")
-            m_health_points = functions.hero_attacks(combat_strength, m_health_points)
+            m_health_points = functions_lab06_solution.hero_attacks(combat_strength, m_health_points)
             if m_health_points == 0:
                 num_stars = 3
             else:
                 print("    |", end="    ")
                 print("------------------------------------------------------------------")
                 input("    |    The monster strikes (Press enter)!!!")
-                health_points = functions.monster_attacks(m_combat_strength, health_points)
+                health_points = functions_lab06_solution.monster_attacks(m_combat_strength, health_points)
                 if health_points == 0:
                     num_stars = 1
                 else:
@@ -255,14 +224,14 @@ if not input_invalid:
         else:
             print("    |", end="    ")
             input("The Monster strikes (Press enter)")
-            health_points = functions.monster_attacks(m_combat_strength, health_points)
+            health_points = functions_lab06_solution.monster_attacks(m_combat_strength, health_points)
             if health_points == 0:
                 num_stars = 1
             else:
                 print("    |", end="    ")
                 print("------------------------------------------------------------------")
                 input("The hero strikes!! (Press enter)")
-                m_health_points = functions.hero_attacks(combat_strength, m_health_points)
+                m_health_points = functions_lab06_solution.hero_attacks(combat_strength, m_health_points)
                 if m_health_points == 0:
                     num_stars = 3
                 else:
@@ -297,6 +266,6 @@ if not input_invalid:
         stars_display = "*" * num_stars
         print("    |    Hero " + short_name + " gets <" + stars_display + "> stars")
 
-        functions.save_game(winner, hero_name=short_name, num_stars=num_stars)       
+        functions_lab06_solution.save_game(winner, hero_name=short_name, num_stars=num_stars)       
 
 
