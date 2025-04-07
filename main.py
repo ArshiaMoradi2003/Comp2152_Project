@@ -3,6 +3,27 @@ import random
 
 # Put all the functions into another file and import them
 import functions
+from pet import Pet
+
+# Define pets
+pets = [
+    Pet("Fluffy", "heal"),
+    Pet("Blaze", "boost"),
+    Pet("Shadow", "weaken")
+]
+
+# Choose pet
+print("    ------------------------------------------------------------------")
+print("    |    Choose a pet to assist you in battle:")
+for idx, p in enumerate(pets):
+    print(f"    |    {idx + 1}. {p.name} ({p.ability})")
+
+selected = -1
+while selected not in range(1, len(pets) + 1):
+    selected = int(input("    |    Enter pet number: "))
+
+selected_pet = pets[selected - 1]
+print(f"    |    You chose {selected_pet.name} with ability: {selected_pet.ability}")
 
 
 # Define Dice
@@ -119,6 +140,17 @@ if not input_invalid:
         input("    |    Roll to see who strikes first (Enter)")
         attack_roll = random.choice(small_dice_options)
 
+        use = input(f"    |    Do you want to use {selected_pet.name}'s ability this turn? (y/n): ").lower()
+        if use == 'y':
+            combat_strength, m_combat_strength, health_points = selected_pet.use_ability(combat_strength,
+                                                                                         m_combat_strength,
+                                                                                         health_points)
+        else:
+            print(f"    |    You saved {selected_pet.name}'s ability for later.")
+
+        # 매 턴 끝나고 쿨타임 감소
+        selected_pet.tick()
+
         if attack_roll % 2 == 1:  # Hero attacks first
             input("    |    You strike! (Enter)")
             m_health_points = functions.hero_attacks(combat_strength, m_health_points)
@@ -173,4 +205,3 @@ if not input_invalid:
         stars_display = "*" * num_stars
         print(f"    |    Hero {short_name} gets <{stars_display}> stars")
         functions.save_game(winner, hero_name=short_name, num_stars=num_stars)
-
